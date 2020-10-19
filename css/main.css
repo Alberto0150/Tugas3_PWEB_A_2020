@@ -1,0 +1,31 @@
+body, html {
+    display: flex;
+    flex-direction: column;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+.tableContainer {
+    width: 100%;
+}
+
+.tableItem {
+    text-align: center;
+}
+
+.nav {
+    flex-direction: row;
+    margin-bottom: 4%;
+}
+
+.addGuest {
+    bottom: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    padding: 2%;
+}
+
+.btnAddGuest {
+    width: 100%;
+}
