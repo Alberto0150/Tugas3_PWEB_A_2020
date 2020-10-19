@@ -21,7 +21,7 @@
             mysql_close($link);
             
             //Bagian tampilan
-            echo("<table class="viewingtable">");
+            echo("<table>");
             echo("
             <tr>
                 <td>ID</td>
@@ -54,7 +54,7 @@
                     <td>$JENIS_BAYAR</td>
                     <td>$BIAYA</td>
                 </tr>
-                ")
+                ");
             }
             echo("</table>");
         ?>
