@@ -1,14 +1,19 @@
 <?php
 
-$server = "localhost";
-$user = "root";
-$password = "";
-$nama_database = "guest_book";
+    $db = mysqli_connect("localhost", "root", "", "guest_book");
+    if( !$db ){
+        die("Gagal terhubung dengan database: " . mysqli_connect_error());
+    }
 
-$db = mysqli_connect($server, $user, $password, $nama_database);
+    function getAllUser($query_sintax) {
+        global $db;
+        $all_result = mysqli_query($db, $query_sintax);
+        
+        dbclose();
+        return $all_result;
+    }
 
-if( !$db ){
-    die("Gagal terhubung dengan database: " . mysqli_connect_error());
-}
-
+    function dbclose() {
+        mysqli_close(mysqli_connect("localhost", "root", "", "guest_book"));
+    }
 ?>
