@@ -8,9 +8,36 @@
     function getAllUser($query_sintax) {
         global $db;
         $all_result = mysqli_query($db, $query_sintax);
-        
+    
         dbclose();
         return $all_result;
+    }
+
+    function addGuest($request) {
+        global $db;
+
+        $nama = $_POST['nama'];
+        $ktp = $_POST['ktp'];
+        $telp = $_POST['telp'];
+        $pembayaran = $_POST['pembayaran'];
+        $biaya = $_POST['biaya'];
+        
+
+        mysqli_query($db, "INSERT INTO guest(G_NAMA, G_KTP, G_TELP, G_JENIS_BAYAR, G_BIAYA) VALUES('$nama', '$ktp', '$telp', '$pembayaran', '$biaya')");
+        $status = mysqli_affected_rows($db);
+        dbclose();
+        return $status;
+    }
+
+    function deleteGuest($request){
+        global $db;
+
+        $ids = $_POST['userId'];
+
+        mysqli_query($db, "DELETE FROM guest WHERE G_ID = $ids");
+        $status = mysqli_affected_rows($db);
+        dbclose();
+        return $status;
     }
 
     function dbclose() {

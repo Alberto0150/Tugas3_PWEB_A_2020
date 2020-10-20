@@ -20,7 +20,7 @@ body, html {
 
 .addGuest {
     bottom: 0;
-    position: absolute;
+    position: relative;
     text-align: center;
     width: 100%;
     padding: 2%;
