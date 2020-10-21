@@ -28,12 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `guest` (
-  `G_ID` int(11) NOT NULL,
+  `G_ID` int(11) NOT NULL AUTO_INCREMENT,
   `G_NAMA` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `G_KTP` char(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `G_TELP` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `G_JENIS_BAYAR` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `G_BIAYA` int(11) DEFAULT NULL
+  PRIMARY KEY (`G_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
