@@ -29,6 +29,23 @@
         return $status;
     }
 
+    function updateGuest($request) {
+        global $db;
+
+        $id = $_POST['id'];
+        $nama = $_POST['nama'];
+        $ktp = $_POST['ktp'];
+        $telp = $_POST['telp'];
+        $pembayaran = $_POST['pembayaran'];
+        $biaya = $_POST['biaya'];
+        
+
+        mysqli_query($db, "UPDATE guest SET G_NAMA = '$nama', G_KTP = '$ktp', G_TELP = '$telp', G_JENIS_BAYAR = '$pembayaran' , G_BIAYA = '$biaya' WHERE G_ID = '$id'");
+        $status = mysqli_affected_rows($db);
+        dbclose();
+        return $status;
+    }
+
     function deleteGuest($request){
         global $db;
 

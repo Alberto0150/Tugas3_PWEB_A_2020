@@ -66,29 +66,131 @@
             
             echo "<tbody>";
             //ambil record
-            while($user = mysqli_fetch_array($all_user)){
-                //isi di layar
-                echo "<tr>";
-                echo "<td>".$user['G_ID']."</td>";
-                echo "<td>".$user['G_NAMA']."</td>";
-                echo "<td>".$user['G_KTP']."</td>";
-                echo "<td>".$user['G_TELP']."</td>";
-                echo "<td>".$user['G_JENIS_BAYAR']."</td>";
-                echo "<td>".$user['G_BIAYA']."</td>";
-                echo "<form method='POST' action='backend/deleteFunction.php'>
-                    <input name='userId' value=".$user['G_ID']." hidden/>
+            while($user = mysqli_fetch_array($all_user)){?>
+                <tr>
+                <td><?php echo $user['G_ID']; ?></td>
+                <td><?php echo $user['G_NAMA']; ?></td>
+                <td><?php echo $user['G_KTP']; ?></td>
+                <td><?php echo $user['G_TELP']; ?></td>
+                <td><?php echo $user['G_JENIS_BAYAR']; ?></td>
+                <td><?php echo $user['G_BIAYA']; ?></td>
+                <form method='POST' action='backend/deleteFunction.php'>
+                    <input name='userId' value=<?php echo $user['G_ID']; ?> hidden/>
                     <td><button type='submit' class='btn btn-error'>
                         <i class='fa fa-trash' aria-hidden='true'> Hapus</i>
                     </button></td>
-                </form>";
-                echo "<td class='tableItem'><button class='btn btn-primary'>
-                    <i class='fa fa-pencil' aria-hidden='true'> Update</i>
-                </button></td>";
-                echo "</tr>";
-            }
-            echo "</tbody>";
-            echo "</table>";
-        ?>
+                </form>
+                <td class='tableItem'>
+                <a class="btn btn btn-primary" href="#modalUpdate-<?php echo $user['G_ID'];?>"><i class='fa fa-pencil' aria-hidden='true'> Update
+                </i></a>
+                <div class="modal" id="modalUpdate-<?php echo $user['G_ID'];?>">
+                    <a href="#close" class="modal-overlay" aria-label="Close"></a>
+                    <div class="modal-container">
+                        <div class="modal-header">
+                            <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
+                        <div class="modal-title h5">Update Data Guest</div>
+                        </div>
+                        <div class="modal-body">
+                        <form action="backend/updateFunction.php" method="POST">
+                        <?php
+                            $id = $user['G_ID']; 
+                            $query_edit = getAllUser("SELECT * FROM guest WHERE G_ID='$id'");
+                            while ($user_edit= mysqli_fetch_array($query_edit)) {  
+                        ?>
+                            <div class="content">
+                                <input class="form-input" type="hidden" id="id" name="id" value="<?php echo $user_edit['G_ID']; ?>">
+                                <div class="form-group">
+                                    <div class="text-left"> 
+                                        <label class="form-label" for="nama">Nama</label>
+                                    </div>
+                                    <input class="form-input" type="text" id="nama" name="nama" value="<?php echo $user_edit['G_NAMA']; ?>"placeholder="Nama Guest" required>
+                                </div>
+                                <div class="form-group">
+                                    <div class="text-left"> 
+                                        <label class="form-label" for="ktp">No KTP</label> 
+                                    </div>
+                                    <input class="form-input" type="text" id="ktp" name="ktp" value="<?php echo $user_edit['G_KTP']; ?>"placeholder="Nomor KTP" required>
+                                </div>
+                                <div class="form-group">
+                                    <div class="text-left">
+                                        <label class="form-label" for="telp">Nomor Telepon</label>
+                                    </div>  
+                                    <input class="form-input" type="text" id="telp" name="telp" value="<?php echo $user_edit['G_TELP']; ?>"placeholder="Nomor Telepon" required>
+                                </div>
+                                <div class="form-group">
+                                    <div class="text-left">
+                                        <label class="form-label" for="pembayaran">Jenis Pembayaran</label>
+                                    </div>
+                                    <select class="form-select" id="pembayaran" name="pembayaran" required>
+                                        <?php 
+                                        if( $user_edit['G_JENIS_BAYAR'] == "CASH")
+                                        {
+                                            echo "<option value='CASH' selected>CASH</option>";
+                                            echo "<option value='DEBIT BCA'>DEBIT BCA</option>";
+                                            echo "<option value='DEBIT MANDIRI'>DEBIT MANDIRI</option>";
+                                            echo "<option value='DEBIT BRI'>DEBIT BRI</option>";
+                                            echo "<option value='DEBIT BNI'>DEBIT BNI</option>"; 
+                                        }
+                                        elseif ($user_edit['G_JENIS_BAYAR'] == "DEBIT BCA")
+                                        {
+                                            echo "<option value='CASH'>CASH</option>";
+                                            echo "<option value='DEBIT BCA' selected>DEBIT BCA</option>";
+                                            echo "<option value='DEBIT MANDIRI'>DEBIT MANDIRI</option>";
+                                            echo "<option value='DEBIT BRI'>DEBIT BRI</option>";
+                                            echo "<option value='DEBIT BNI'>DEBIT BNI</option>";   
+                                        }
+                                        elseif ($user_edit['G_JENIS_BAYAR'] == "DEBIT MANDIRI")
+                                        {
+                                            echo "<option value='CASH'>CASH</option>";
+                                            echo "<option value='DEBIT BCA' >DEBIT BCA</option>";
+                                            echo "<option value='DEBIT MANDIRI' selected>DEBIT MANDIRI</option>";
+                                            echo "<option value='DEBIT BRI'>DEBIT BRI</option>";
+                                            echo "<option value='DEBIT BNI'>DEBIT BNI</option>";   
+                                        }
+                                        elseif ($user_edit['G_JENIS_BAYAR'] == "DEBIT BRI")
+                                        {
+                                            echo "<option value='CASH'>CASH</option>";
+                                            echo "<option value='DEBIT BCA' >DEBIT BCA</option>";
+                                            echo "<option value='DEBIT MANDIRI'>DEBIT MANDIRI</option>";
+                                            echo "<option value='DEBIT BRI' selected>DEBIT BRI</option>";
+                                            echo "<option value='DEBIT BNI'>DEBIT BNI</option>";
+                                        }
+                                        else
+                                        {
+                                            echo "<option value='CASH'>CASH</option>";
+                                            echo "<option value='DEBIT BCA' >DEBIT BCA</option>";
+                                            echo "<option value='DEBIT MANDIRI'>DEBIT MANDIRI</option>";
+                                            echo "<option value='DEBIT BRI'>DEBIT BRI</option>";
+                                            echo "<option value='DEBIT BNI' selected>DEBIT BNI</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="text-left">
+                                        <label class="form-label" for="biaya">Biaya</label>
+                                    </div>    
+                                    <input class="form-input" type="text" id="biaya" name="biaya" value="<?php echo $user_edit['G_BIAYA']; ?>"placeholder="Biaya" required>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                        <?php 
+                            }
+                        ?> 
+                    </div>
+                </div>
+                
+                </td>
+                </tr>
+            <?php 
+                }
+            ?>     
+            </tbody>
+            </table>
     </div>
     <div class="addGuest">
         <a class="btn btnAddGuest" href="#modal-id">Tambah Guest</a>
