@@ -15,11 +15,31 @@
     <link rel="stylesheet" href="css\main.css"/>
 </head>
 <body>
-    <ul class="nav">
-        <li class="nav-item">
-            <a href="#">Simple CRUD Guest Book</a>
-        </li>
-    </ul>
+    <header>
+        <div id="section-a">
+            <img src="image/gear.png">
+        </div>
+
+        <div id="section-b">
+            <h1>
+                Guest Book Bengkel Sukamaju
+            </h1>
+        </div> 
+        
+        <div id="section-c">
+            <img src="image/gear.png">
+        </div>
+
+    </header>
+    
+    <div class="kelompok">
+            <h3>Anggota Kelompok </h3>
+            <ul>
+                <li>Iqbaal Pratama Putra</li>
+                <li>Alberto Sanjaya</li>
+                <li>Syubban Fakhriya</li>
+            </ul>
+        </div>
     <?php 
     session_start();
     if (isset($_SESSION["sukses"]))
@@ -41,11 +61,7 @@
         unset($_SESSION["gagal"]);
     }
     ?>
-    <div class="kelompok">
-        <div>Iqbaal Pratama Putra</div>
-        <div>Alberto Sanjaya</div>
-        <div>Syubban Fakhriya</div>
-    </div>
+    
     <div class='tableContainer'>
         <?php        
             echo "<table class='table table-striped table-hover table-scroll'>";
