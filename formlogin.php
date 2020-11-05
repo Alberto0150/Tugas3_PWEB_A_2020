@@ -2,11 +2,11 @@
     <table>
         <tr>
             <td>Username </td>
-            <td><input type="text"name="nama_admin"></td>
+            <td><input type="text"name="A_USERNAME"></td>
         </tr>
         <tr>
             <td>password</td>
-            <td><input type="password"name="password"></td>
+            <td><input type="password"name="A_PASSWORD"></td>
         </tr>
         <tr>
             <td>&nbsp</td>

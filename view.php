@@ -32,7 +32,14 @@
 
     </header>
     <main>
-        
+        <div class="kelompok">
+            <h3>Anggota Kelompok </h3>
+            <ul>
+                <li>Iqbaal Pratama Putra</li>
+                <li>Alberto Sanjaya</li>
+                <li>Syubban Fakhriya</li>
+            </ul>
+        </div>
         <?php 
         session_start();
         if (isset($_SESSION["sukses"]))
@@ -252,5 +259,6 @@
             </form>
         </div>
     </div>
+    <button><a href="backend/logout.php">Logout</a></button>
 </body>
 </html>
