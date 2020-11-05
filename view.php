@@ -1,3 +1,8 @@
+<?php session_start();
+    if(isset($_SESSION['A_USERNAME']))
+    {
+        ?>
+
 <?php
     require './backend/dbconnection.php';
     $all_user = getAllUser("SELECT * FROM guest");
@@ -259,6 +264,11 @@
             </form>
         </div>
     </div>
-    <button><a href="backend/logout.php">Logout</a></button>
+    <a href="backend/logout.php"><button>Logout</button></a>
 </body>
 </html>
+<?php
+} else {
+        ?> Anda tidak dapat mengakses halaman ini. silahkan kembali ke <a href="index.php"> Homepage </a> <?php
+    } 
+?> 
