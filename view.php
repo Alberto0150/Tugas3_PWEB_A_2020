@@ -46,7 +46,6 @@
             </ul>
         </div>
         <?php 
-        session_start();
         if (isset($_SESSION["sukses"]))
         {
             echo '<div class="toast toast-success">';
