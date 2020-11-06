@@ -12,9 +12,14 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="css\main.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
+    <?php
+        session_start();
+        if(isset($_SESSION['username'])){
+    ?>
+
     <header>
         <div id="section-a">
             <img src="image/gear.png">
@@ -210,7 +215,7 @@
         </div>
     </main>
     <div class="addGuest">
-        <div class="btn btnAddGuest">  
+        <div class="btn">  
             <a  href="#modal-id">Tambah Guest</a>
         </div>
     </div>
@@ -259,5 +264,12 @@
             </form>
         </div>
     </div>
+
+    <?php
+        } else {
+            $_SESSION["gagal"] = "Belum melakukan login";
+            header('Location: login.php');
+        }
+    ?>
 </body>
 </html>

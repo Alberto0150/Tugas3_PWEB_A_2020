@@ -8,7 +8,7 @@
     function getAllUser($query_sintax) {
         global $db;
         $all_result = mysqli_query($db, $query_sintax);
-    
+
         dbclose();
         return $all_result;
     }
@@ -56,6 +56,38 @@
         dbclose();
         return $status;
     }
+
+    function registerAdmin($request) {
+        global $db;
+
+        $username = $_POST['username'];
+        $password = md5($_POST['password']);
+        $nama = $_POST['nama'];
+        
+        mysqli_query($db, "INSERT INTO administrator(USERNAME_ADMIN, PASSWORD_ADMIN, NAMA_ADMIN) VALUES('$username', '$password', '$nama')");
+        $status = mysqli_affected_rows($db);
+
+        dbclose();
+        return $status;
+    }
+
+    function loginAdmin($request) {
+        global $db;
+
+        $username = $_POST['username'];
+        $password = md5($_POST['password']);
+        
+        $status = mysqli_query($db, "SELECT * FROM administrator WHERE USERNAME_ADMIN = '$username' AND PASSWORD_ADMIN = '$password'");
+
+        dbclose();
+        return $status;
+    }
+
+    // function console_log( $data ){
+    //     echo '<script>';
+    //     echo 'console.log('. json_encode( $data ) .')';
+    //     echo '</script>';
+    // }
 
     function dbclose() {
         mysqli_close(mysqli_connect("localhost", "root", "", "guest_book"));
