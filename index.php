@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css\login.css"/>
     <title>Document</title>
 </head>
-<body>
-        <h1> ini homepage </h1>
+<body>  
+    <div class="opening">
+        <h1> Selamat Datang di Database Bengkel Sukamaju </h1>
         <button><a href="formlogin.php">Login admin</a></button>
+    </div>
 </body>
 </html>
