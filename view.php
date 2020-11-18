@@ -37,6 +37,21 @@
 
     </header>
     <main>
+        <?php
+            $filecounter="./file_counter.txt";
+            $fl=fopen($filecounter,"r+");
+            $hit=fread($fl,filesize($filecounter));
+            echo("<table width=250 align=center border=1 cellspacing=0 cellpadding=0
+            bordercolor=#0000FF><tr>");
+            echo("<td width=250 valign=middle align=center>");
+            echo("<font face=verdana size=2 color=#FF0000><b>");
+            echo("Anda pengunjung yang ke:");
+            echo($hit);
+            echo("</b></font>");
+            echo("</td>");
+            echo("</tr></table>");
+            fclose($fl);            
+        ?>
         <div class="kelompok">
             <h3>Anggota Kelompok </h3>
             <ul>
@@ -45,8 +60,12 @@
                 <li>Syubban Fakhriya</li>
             </ul>
         </div>
+        <form method="POST" action="backend/logout.php">
+            <button type="submit" class="btn">Keluar</button>
+        </form>
+        
         <?php 
-        session_start();
+        
         if (isset($_SESSION["sukses"]))
         {
             echo '<div class="toast toast-success">';

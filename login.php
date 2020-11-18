@@ -44,7 +44,7 @@
                 {
                     echo '<div class="toast toast-success">';
                     echo '<button class="btn btn-clear float-right"></button>';
-                    echo $_SESSION["gagal"];
+                    echo $_SESSION["sukses"];
                     echo '</div>';
 
                     unset($_SESSION["sukses"]);
