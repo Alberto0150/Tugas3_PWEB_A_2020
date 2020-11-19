@@ -28,11 +28,12 @@
             width: 100%;
         }
         .title {
-            font-size: 3vh;
+            font-size: 5vh;
         }
         .textBottom {
             margin-top: 2%;
         }
+
     </style>
 </head>
 <body style="width: 100%; height: auto;">
@@ -60,7 +61,7 @@
                 }
             ?>
             <div class="flex-centered text-bold title">Masuk</div>
-            <form method="POST" action="backend/loginFunction.php">
+            <form method="POST" action="backend/loginFunction.php" onsubmit="return loginFormValidator(this)">
                 <div class="card-body">
                     <div class="form-group">
                         <label class="form-label" for="username">Username</label>
@@ -80,5 +81,16 @@
             </form>
         </div>
     </div>
+
+    <script>
+        let loginFormValidator = (context) => {
+            if(context.username.value == "" || context.password.value == ""){
+                alert('Username dan password tidak boleh kosong');
+                return false;
+            }else {
+                return true;
+            }
+        };
+    </script>
 </body>
 </html>
