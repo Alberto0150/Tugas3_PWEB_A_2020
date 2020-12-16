@@ -73,6 +73,36 @@
         $password = md5($_POST['password']);
         $nama = $_POST['nama'];
         $fileFoto = (object) @$_FILES['file'];
+        $folderUpload = __DIR__ . "/assets/uploads";
+
+        if ($fileFoto->size > 1000 * 2000) {
+            die("File tidak boleh lebih dari 2MB");}
+        
+        if ($fileFoto->type !== 'image/jpeg') {
+            die("File ktp harus jpeg!");}
+        # periksa apakah folder sudah ada
+        if (!is_dir($folderUpload))
+        {
+        # jika tidak maka folder harus dibuat terlebih dahulu
+        # mode : owner only
+        mkdir($folderUpload, 0700, $rekursif = true);
+        # simpan masing-masing file ke dalam array
+        # dan casting menjadi objek :)
+        };
+
+
+        # mulai upload file
+        $uploadFotoSukses = move_uploaded_file(
+            $fileFoto->tmp_name, "{$folderUpload}/{$fileFoto->name}"
+        );
+
+        if ($uploadFotoSukses) {
+            $link = "{$folderUpload}/{$fileFoto->name}";
+            echo "Sukses Upload Foto: <a href='{$link}'>{$fileFoto->name}</a>";
+            echo "<br>";
+        };
+
+        
         #call check photo function
         $hasil = checkphoto($fileFoto);
         #if $hasil have face in it
