@@ -11,4 +11,21 @@ def checkFace(img):
     else:
          return img
     
-if__name__=="__main__":
+if __name__=="__main__":
+    # nmFile=sys.argv[1]
+    nmFile = '1_20181204110834.png'
+    dim=96
+    img = cv2.imread(nmFile)
+    face= True
+    if img is None:
+        os.system('rm %s'%nmFile)
+        face=False
+    else:
+        aligned_img = checkFace(img)
+        if aligned_img is None:
+            face=False
+            os.system('rm %s'%nmFile)
+    if face == True:
+        print("ACCEPTED")
+    else:
+        print("REJECTED, not face, no add to repository  ")
