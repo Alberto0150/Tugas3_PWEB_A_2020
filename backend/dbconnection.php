@@ -63,7 +63,7 @@
         $output = shell_exec($command);
 
         $hasil = array('msg'=>$output);
-        return $hasil
+        return $hasil;
     }
 
     function registerAdmin($request) {
