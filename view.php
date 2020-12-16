@@ -12,9 +12,14 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="css\main.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
+    <?php
+        session_start();
+        if(isset($_SESSION['username'])){
+    ?>
+
     <header>
         <div id="section-a">
             <img src="image/gear.png">
@@ -32,6 +37,21 @@
 
     </header>
     <main>
+        <?php
+            $filecounter="./file_counter.txt";
+            $fl=fopen($filecounter,"r+");
+            $hit=fread($fl,filesize($filecounter));
+            echo("<table width=250 align=center border=1 cellspacing=0 cellpadding=0
+            bordercolor=#0000FF><tr>");
+            echo("<td width=250 valign=middle align=center>");
+            echo("<font face=verdana size=2 color=#FF0000><b>");
+            echo("Anda pengunjung yang ke:");
+            echo($hit);
+            echo("</b></font>");
+            echo("</td>");
+            echo("</tr></table>");
+            fclose($fl);            
+        ?>
         <div class="kelompok">
             <h3>Anggota Kelompok </h3>
             <ul>
@@ -40,8 +60,12 @@
                 <li>Syubban Fakhriya</li>
             </ul>
         </div>
+        <form method="POST" action="backend/logout.php">
+            <button type="submit" class="btn">Keluar</button>
+        </form>
+        
         <?php 
-        session_start();
+        
         if (isset($_SESSION["sukses"]))
         {
             echo '<div class="toast toast-success">';
@@ -210,7 +234,7 @@
         </div>
     </main>
     <div class="addGuest">
-        <div class="btn btnAddGuest">  
+        <div class="btn">  
             <a  href="#modal-id">Tambah Guest</a>
         </div>
     </div>
@@ -259,5 +283,12 @@
             </form>
         </div>
     </div>
+
+    <?php
+        } else {
+            $_SESSION["gagal"] = "Belum melakukan login";
+            header('Location: login.php');
+        }
+    ?>
 </body>
 </html>
