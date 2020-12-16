@@ -57,6 +57,15 @@
         return $status;
     }
 
+    function checkphoto($fileFoto)
+    {
+        $command = escapeshellcmd("python3.7/var/www/prg/doAPI.py".$fileFoto);
+        $output = shell_exec($command);
+
+        $hasil = array('msg'=>$output);
+        return $hasil
+    }
+
     function registerAdmin($request) {
         global $db;
 
@@ -64,7 +73,13 @@
         $password = md5($_POST['password']);
         $nama = $_POST['nama'];
         $fileFoto = (object) @$_FILES['file'];
-        mysqli_query($db, "INSERT INTO administrator(USERNAME_ADMIN, PASSWORD_ADMIN, NAMA_ADMIN) VALUES('$username', '$password', '$nama')");
+        #call check photo function
+        $hasil = checkphoto($fileFoto);
+        #if $hasil have face in it
+        if ($hasil)
+        {
+            mysqli_query($db, "INSERT INTO administrator(USERNAME_ADMIN, PASSWORD_ADMIN, NAMA_ADMIN) VALUES('$username', '$password', '$nama')");
+        }
         $status = mysqli_affected_rows($db);
 
         dbclose();
