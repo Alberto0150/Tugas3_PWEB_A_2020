@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> -->
     <style>
         .formContainer {
             margin: 0;
@@ -60,7 +59,7 @@
     <div class="flex-centered formContainer">
         <div class="card col-xl-7 customForm">
             <div class="flex-centered text-bold title">Daftar</div>
-            <form method="POST" action="backend/registerFunction.php">
+            <form method="POST" action="backend/registerFunction.php" role="form" enctype="multipart/form-data">
                 <div class="card-body">
                     <div class="form-group">
                         <label class="form-label" for="nama">Nama Lengkap</label>
@@ -69,6 +68,10 @@
                     <div class="form-group">
                         <label class="form-label" for="username">Username</label>
                         <input class="form-input" type="text" id="username" name="username" placeholder="Username"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="file">Foto</label>
+                        <input class="form-input" type="file" id="file" name="file" placeholder="File Foto"/>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="password">Password</label>
@@ -96,6 +99,7 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         let password = document.getElementById('password');
         let pesan = document.getElementById('message');

@@ -5,7 +5,7 @@ from os import path
 
 # Get user supplied values
 imagePath = sys.argv[1]
-print ("File exists:"+str(path.exists(imagePath)))
+# print ("File exists:"+str(path.exists(imagePath)))
 cascPath = "haarcascade_frontalface_default.xml"
 
 # Create the haar cascade
@@ -24,11 +24,11 @@ faces = faceCascade.detectMultiScale(
     flags = cv2.CASCADE_SCALE_IMAGE
 )
 
-print("Found {0} faces!".format(len(faces)))
+print("{0}".format(len(faces)))
 
 # Draw a rectangle around the faces
 for (x, y, w, h) in faces:
     cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-cv2.imshow("Faces found", image)
-cv2.waitKey(0)
+# cv2.imshow("Faces found", image)
+# cv2.waitKey(0)

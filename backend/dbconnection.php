@@ -60,15 +60,47 @@
     function registerAdmin($request) {
         global $db;
 
-        $username = $_POST['username'];
-        $password = md5($_POST['password']);
-        $nama = $_POST['nama'];
+        if(!$_FILES || !key_exists('file', $_FILES)){
+            echo('File tidak terupload.');
+        }
+    
+        $temporaryFile = $_FILES['file']['tmp_name'];
+        $extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
         
-        mysqli_query($db, "INSERT INTO administrator(USERNAME_ADMIN, PASSWORD_ADMIN, NAMA_ADMIN) VALUES('$username', '$password', '$nama')");
-        $status = mysqli_affected_rows($db);
+        // Check the MIME type
+        $supportedFormat = ['image/jpg', 'image/jpeg', 'image/png'];
+        if(!in_array(mime_content_type($temporaryFile), $supportedFormat)){
+            echo('Mohon hanya unggah file JPG, JPEG, atau PNG.');
+        }
+    
+        // Cek ukuran gambar
+        if(getimagesize($temporaryFile) == 0){
+            echo('Ukuran tidak valid.');
+        }
+    
+        // Upload gambar
+        $filename = md5($temporaryFile).'.'.$extension;
+        // echo($filename);
+        move_uploaded_file($temporaryFile, '../upload/'.$filename);
 
-        dbclose();
-        return $status;
+        $is_detected = shell_exec('cd face_detector; python3 main.py'.'../upload/'.$filename);
+        echo($is_detected);
+        // if($is_detected > 0){
+        //     // $username = $_POST['username'];
+        //     // $password = md5($_POST['password']);
+        //     // $nama = $_POST['nama'];
+
+        //     // mysqli_query($db, "INSERT INTO administrator(USERNAME_ADMIN, PASSWORD_ADMIN, NAMA_ADMIN) VALUES('$username', '$password', '$nama')");
+        //     // $status = mysqli_affected_rows($db);
+        //     $status = 1;
+        //     // dbclose();
+        // }else{
+        //     unlink('../upload/'.$filename);
+        //     $status = -1;
+        // }
+
+        // return $status;
+        return 1;
     }
 
     function loginAdmin($request) {
