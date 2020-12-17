@@ -84,7 +84,13 @@
         move_uploaded_file($temporaryFile, '../upload/'.$filename);
 
         $is_detected = shell_exec('cd face_detector; python3 main.py'.'../upload/'.$filename);
-        echo($is_detected);
+        if($is_detected)
+        {
+            echo("jalan");
+        }
+        else{
+            echo("tidak");
+        }
         // if($is_detected > 0){
         //     // $username = $_POST['username'];
         //     // $password = md5($_POST['password']);

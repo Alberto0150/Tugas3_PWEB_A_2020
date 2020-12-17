@@ -1,34 +1,66 @@
-import cv2
+import cv2 
 import sys
-import os.path
-from os import path
+import argparse
+import os
 
-# Get user supplied values
-imagePath = sys.argv[1]
-# print ("File exists:"+str(path.exists(imagePath)))
-cascPath = "haarcascade_frontalface_default.xml"
+def isImage(inputImg):
+    if inputImg is None:
+        return False
+    else:
+        return True
 
-# Create the haar cascade
-faceCascade = cv2.CascadeClassifier(cascPath)
+def load_classifier():
+    return cv2.CascadeClassifier('haarcascade_frontalface_default.xml'),cv2.CascadeClassifier('haarcascade_eye.xml')
 
-# Read the image
-image = cv2.imread(imagePath)
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+def detect(inputImg, show):
+    img = cv2.imread(inputImg)
+    width = img.shape[0]
+    height = img.shape[1]
 
-# Detect faces in the image
-faces = faceCascade.detectMultiScale(
-    gray,
-    scaleFactor=1.2,
-    minNeighbors=5,
-    minSize=(80, 80),
-    flags = cv2.CASCADE_SCALE_IMAGE
-)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-print("{0}".format(len(faces)))
+    faceCL, eyeCL = load_classifier()
+    flag = False
 
-# Draw a rectangle around the faces
-for (x, y, w, h) in faces:
-    cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    faces = faceCL.detectMultiScale(gray, 1.3, 5)
+    for (x,y,w,h) in faces:
+        img = cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
+        area = (x+w)*(y+h)
+        if int((area/(width*height))*100) > 40:
+            flag = True
+        roi_gray = gray[y:y+h, x:x+w]
+        roi_color = img[y:y+h, x:x+w]
+        eyes = eyeCL.detectMultiScale(roi_gray)
+        for (ex, ey, ew, eh) in eyes:
+            cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
 
-# cv2.imshow("Faces found", image)
-# cv2.waitKey(0)
+    if show:
+        cv2.imshow('input',img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+    else:
+        return flag
+
+def run(inputImg, show):
+    if isImage(inputImg) is True:
+        flag = detect(inputImg, show)
+        if flag is True:
+            print(1)
+        elif flag is False:
+            cmd = "del {}".format(inputImg)
+            os.system(cmd)
+            print(0)
+            # return 0
+        elif flag is None:
+            print("Debug Mode Activated")
+    elif isImage(inputImg) is False:
+        cmd = "del {}".format(inputImg)
+        os.system(cmd)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Face detection process')
+    parser.add_argument("-i", "--input", required=True, help="path to image file")
+    parser.add_argument("-s", "--show", action="store_true", help="to show image")
+    args = vars(parser.parse_args())
+
+    run(args['input'],args['show'])
