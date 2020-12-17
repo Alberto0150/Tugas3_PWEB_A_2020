@@ -83,7 +83,7 @@
         // echo($filename);
         move_uploaded_file($temporaryFile, '../upload/'.$filename);
 
-        $is_detected = shell_exec('cd face_detector; python3 main.py'.'../upload/'.$filename);
+        $is_detected = shell_exec('python .\backend\main.py '.'../upload/'.$filename);
         echo($is_detected);
         // if($is_detected > 0){
         //     // $username = $_POST['username'];
@@ -101,6 +101,46 @@
 
         // return $status;
         return 1;
+    }
+
+    function uploadFile($request){
+        global $db;
+        $username = $_POST['username'];
+        $password = md5($_POST['password']);
+
+        $status = mysqli_query($db, "SELECT * FROM administrator WHERE USERNAME_ADMIN = '$username' AND PASSWORD_ADMIN = '$password'");
+        if(mysqli_num_rows($status) == 1){
+            if(!$_FILES || !key_exists('file', $_FILES)){
+                echo('File tidak terupload.');
+            }
+        
+            $temporaryFile = $_FILES['file']['tmp_name'];
+            $extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+            
+            // Check the MIME type
+            $supportedFormat = ['image/jpg', 'image/jpeg', 'image/png'];
+            if(!in_array(mime_content_type($temporaryFile), $supportedFormat)){
+                echo('Mohon hanya unggah file JPG, JPEG, atau PNG.');
+            }
+        
+            // Cek ukuran gambar
+            if(getimagesize($temporaryFile) == 0){
+                echo('Ukuran tidak valid.');
+            }
+        
+            // Upload gambar
+            $filename = md5($temporaryFile).'.'.$extension;
+            // echo($filename);
+            move_uploaded_file($temporaryFile, '../upload/'.$filename);
+            
+            mysqli_query($db, "INSERT INTO logfile(USERNAME_ADMIN, TANGGAL) VALUES('$username', now())");
+
+            dbclose();
+            return $status;
+        }else{
+            dbclose();
+            return $status;
+        }
     }
 
     function loginAdmin($request) {
