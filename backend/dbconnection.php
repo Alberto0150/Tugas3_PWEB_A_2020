@@ -80,7 +80,7 @@
     
         // Upload gambar
         $filename = md5($temporaryFile).'.'.$extension;
-        // echo($filename);
+        echo($filename);
         move_uploaded_file($temporaryFile, '../upload/'.$filename);
 
         $is_detected = shell_exec('cd face_detector; python3 main.py'.'../upload/'.$filename);
